@@ -42,9 +42,3 @@ If you are familiar with python, you can just run scirpt.py or build it with [py
 ```sh
 $ tmusic
 ```
-
-for help
-
-``` sh
-$ tmusic --help
-```

@@ -38,7 +38,7 @@ source $VENV_DIR/bin/activate
 # Установка PyInstaller, если он не установлен
 if ! $PIP show pyinstaller &> /dev/null; then
     echo "Установка PyInstaller..."
-    $PIP install pyinstaller --break-system-packages
+    $PIP install pyinstaller
 fi
 
 # Создание исполняемого файла
@@ -66,10 +66,13 @@ rm -rf venv
 # Деактивация виртуального окружения
 deactivate
 
+if [ ! -d "/usr/local/bin" ]; then
+    mkdir "/usr/local/bin"
+fi
 
-mv "$PROJECT_NAME" "/usr/local/bin"
+mv "$PROJECT_NAME" "/usr/local/bin/"
+
 cat ./docs/man.txt | gzip > tmusic.1.gz
-
 mv tmusic.1.gz /usr/share/man/man1
 mandb
 

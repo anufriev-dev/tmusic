@@ -52,7 +52,7 @@ def copy_and_filter(main_folder, out_folder):
     # получаем список музыки
     files = os.listdir(main_folder)
     
-    exts = [".mp3", ".ogg", ".wav", ".flac", ".aac", "m4a", "wma", "aif", "aiff"]
+    exts = [".mp3", ".ogg", ".wav", ".flac", ".aac", "m4a", "wma", "aif", "aiff", "ape"]
 
     filtered_files = list()
 

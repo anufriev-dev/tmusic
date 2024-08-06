@@ -17,7 +17,7 @@
 ### clone this repo
 
 ``` sh
-git clone https://github.com/GeorgyDev11111/tmusic.git
+git clone https://github.com/anufriev-dev/tmusic.git
 cd tmusic
 ```
 

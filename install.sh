@@ -43,7 +43,7 @@ fi
 
 # Создание исполняемого файла
 echo "Создание исполняемого файла..."
-pyinstaller --onefile --name $PROJECT_NAME "$SCRIPT_NAME.py" 
+pyinstaller --onefile --name $PROJECT_NAME "$SCRIPT_NAME.py"
 
 # Проверка, был ли исполняемый файл создан
 if [ -f "./dist/$PROJECT_NAME" ]; then
@@ -71,10 +71,3 @@ if [ ! -d "/usr/local/bin" ]; then
 fi
 
 mv "$PROJECT_NAME" "/usr/local/bin/"
-
-cat ./docs/man.txt | gzip > tmusic.1.gz
-mv tmusic.1.gz /usr/share/man/man1
-mandb
-
-echo "Программа tmusic успешно установлена!"
-echo "Наберите 'man tmusic', чтобы посмотреть, как пользоваться программой"     

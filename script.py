@@ -1,5 +1,7 @@
+#!/usr/bin/env python3
+
 import re
-import os 
+import os
 import shutil
 
 
@@ -8,13 +10,13 @@ SOURCE = "__source__" # копия всей музыки
 OTHER = "__other__" # одинокие треки
 
 def main():
-    main_folder = input("Введите 'имя папки' с музыкой: ")
+    main_folder = input("Enter a 'folder name' your music: ")
 
     out_folder = f"{main_folder}_out"
 
     # создание шаблона
-    os.makedirs( 
-        os.path.join(out_folder, SOURCE), 
+    os.makedirs(
+        os.path.join(out_folder, SOURCE),
         exist_ok=True
     )
     # копирование и фильтрация
@@ -25,9 +27,9 @@ def main():
     # cd ./<name>_out
     os.chdir(out_folder)
 
-    # основной алгоритм перемещения 
+    # основной алгоритм перемещения
     move_files(SOURCE)
-    
+
     # пытаемся найти место для треков из исходной папки, попутно удаляя найденые
     try_find_tracks_for_folders(SOURCE)
 
@@ -38,7 +40,7 @@ def main():
     try_find_tracks_for_folders(OTHER)
 
     # оставшиеся треки во временной папке сгружаем в корень
-    # в конце удаляем временную папку 
+    # в конце удаляем временную папку
     move_tracks(OTHER, ".")
 
     print(f"Success!\nYour sorted music in '{out_folder}'")
@@ -51,7 +53,7 @@ def copy_and_filter(main_folder, out_folder):
 
     # получаем список музыки
     files = os.listdir(main_folder)
-    
+
     exts = [".mp3", ".ogg", ".wav", ".flac", ".aac", "m4a", "wma", "aif", "aiff", "ape"]
 
     filtered_files = list()
@@ -68,7 +70,7 @@ def copy_and_filter(main_folder, out_folder):
             dst = os.path.join(out_folder, SOURCE, file) # место, куда будет скопирован файл
             shutil.copy(src, dst)
         except Exception as e:
-            print(f"Не удалось скопировать файл {file}: {e}")
+            print(f"Failed to copy file {file}: {e}")
 
 
 def delete_doubles(out_dir):
@@ -84,7 +86,7 @@ def delete_doubles(out_dir):
         try:
             os.remove(os.path.join(out_dir,SOURCE,file))
         except Exception as e:
-            print(f"Не удалось удалить файл {file}: {e}")
+            print(f"Failed to delete file {file}: {e}")
 
 
 def move_files(src):
@@ -103,11 +105,11 @@ def move_files(src):
             path = os.path.join(src,file)
             shutil.copy(path, dst)
         except Exception as e:
-            print(f"Не удалось скопировать файл {file}: {e}")
+            print(f"Failed to copy file {file}: {e}")
 
 
 
-def try_find_tracks_for_folders(src: str): 
+def try_find_tracks_for_folders(src: str):
     """
     Пытается найти подходящие папки для каждого трека\n
     Если удаётся, перемещает треки из папки - src в найденную
@@ -124,7 +126,7 @@ def try_find_tracks_for_folders(src: str):
             if folder in authors:
                 if os.path.exists(fpath):
                     try:
-                        if not os.path.exists(os.path.join(folder,src,file)): 
+                        if not os.path.exists(os.path.join(folder,src,file)):
                             shutil.move(fpath, os.path.join(folder))
                     except Exception:
                         # если файл уже существует, удаляем его из временного хранения
@@ -153,7 +155,7 @@ def collect_single_tracks_in_new_folder():
             for file in files:
                 try:
                     src = os.path.join(folder, file) # ./folder/file
-                    shutil.move(src, OTHER)                
+                    shutil.move(src, OTHER)
                 except:
                     # print(f"Не удалось переместить файл во временный каталог __other__")
                     pass
@@ -173,14 +175,14 @@ def move_tracks(src,dst):
             try:
                 shutil.move(path, dst)
             except:
-                # print("Не удалось переместить файл в корень")
+                # print("Failed to move the file to the root")
                 pass
 
-    # удаление папки  
+    # удаление папки
     try:
         shutil.rmtree(src)
     except Exception as e:
-        print(f"Ошибка удаления {e}")
+        print(f"Error deleting {e}")
 
 
 # возвращаем список авторов
@@ -199,4 +201,5 @@ def get_authors(file: str):
 
 
 if __name__ == "__main__":
+    import docs.help
     main()
